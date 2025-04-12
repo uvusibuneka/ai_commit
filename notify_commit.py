@@ -1,13 +1,13 @@
 import subprocess
 import os
-from openai import OpenAI
+import openai
 from telegram import Bot
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHAT_ID = os.getenv("CHAT_ID")
 
-openai_client = OpenAI(api_key=OPENAI_API_KEY)
+openai.api_key = OPENAI_API_KEY
 bot = Bot(token=TELEGRAM_TOKEN)
 
 def get_git_diff():
@@ -19,14 +19,14 @@ def filter_relevant_chunks(diff_text):
     return ["diff --git " + c for c in chunks if c.strip() and (".py" in c or ".ipynb" in c)]
 
 def summarize_chunk(chunk):
-    response = openai_client.chat.completions.create(
-        model="gpt-4o",
+    response = openai.ChatCompletion.create(
+        model="gpt-4", 
         messages=[
             {"role": "system", "content": "Ты анализируешь изменения в коде и кратко формулируешь, что было сделано."},
             {"role": "user", "content": f"Вот изменения в коде:\n\n{chunk}\n\nСформулируй кратко, что изменилось."}
         ]
     )
-    return response.choices[0].message.content.strip()
+    return response.choices[0].message['content'].strip()
 
 def main():
     diff_text = get_git_diff()
