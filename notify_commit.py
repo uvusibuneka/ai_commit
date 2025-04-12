@@ -11,7 +11,7 @@ openai.api_key = OPENAI_API_KEY
 bot = Bot(token=TELEGRAM_TOKEN)
 
 def main():
-    bot.send_message(chat_id=CHAT_ID, text=final_message)
+    bot.send_message(chat_id=CHAT_ID, text="ГОЛ!")
     print("✅ Отправлено в Telegram.")
 
 if __name__ == "__main__":
