@@ -14,7 +14,7 @@ bot = Bot(token=TELEGRAM_TOKEN)
 
 async def main():
     await bot.send_message(chat_id=CHAT_ID, text="ГОЛ!")
-    result = subprocess.run(["git", "status"], capture_output=True, text=True)
+    result = subprocess.run(["git", "branch"], capture_output=True, text=True)
     if result.returncode == 0:
         print("Git Status Output:")
         print(result.stdout)  
