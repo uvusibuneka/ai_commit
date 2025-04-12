@@ -12,8 +12,8 @@ openai.api_key = OPENAI_API_KEY
 bot = Bot(token=TELEGRAM_TOKEN)
 
 def get_git_diff():
-    # Пытаемся получить разницу между HEAD и предыдущим коммитом
-    result = subprocess.run(["git", "diff", "HEAD~1", "HEAD", "--unified=5"], capture_output=True, text=True)
+    # Пытаемся получить разницу между HEAD и рабочей директорией
+    result = subprocess.run(["git", "diff", "HEAD"], capture_output=True, text=True)
     
     # Логируем результат diff
     if result.returncode != 0:
