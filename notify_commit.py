@@ -22,7 +22,7 @@ async def main():
         print("Ошибка при выполнении git status:")
         print(result.stderr) 
 
-    result = subprocess.run(["git", "diff"], capture_output=True, text=True)
+    result = subprocess.run(["git", "diff", "HEAD~1", "HEAD"], capture_output=True, text=True)
     
     if result.returncode == 0:
         print("Изменения (git diff):")
