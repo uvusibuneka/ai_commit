@@ -7,8 +7,6 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 CHAT_ID = os.getenv("CHAT_ID")
 
-
-
 openai.api_key = OPENAI_API_KEY
 bot = Bot(token=TELEGRAM_TOKEN)
 
@@ -17,7 +15,9 @@ def get_git_diff():
     return result.stdout
 
 def filter_relevant_chunks(diff_text):
+    print("diff_text: ", diff_text)
     chunks = diff_text.split("diff --git ")
+    print("chunks:", chunks)
     return ["diff --git " + c for c in chunks if c.strip() and (".py" in c or ".ipynb" in c)]
 
 def summarize_chunk(chunk):
