@@ -39,12 +39,15 @@ def truncate_diff(diff_text, max_length=1000):
 # Функция для анализа изменений с помощью ChatGPT
 def analyze_changes(diff_text):
     try:
-        response = openai.Completion.create(
+        response = openai.ChatCompletion.create(
             model="gpt-4",  # используем подходящую модель GPT
-            prompt=f"Проанализируй изменения в коде и кратко поясни, что было сделано:\n\n{diff_text}",
+            messages=[
+                {"role": "system", "content": "Ты анализируешь изменения в коде и кратко поясняешь, что было сделано."},
+                {"role": "user", "content": f"Вот изменения в коде:\n\n{diff_text}"}
+            ],
             max_tokens=500  # ограничим количество токенов в ответе
         )
-        return response.choices[0].text.strip()
+        return response.choices[0].message['content'].strip()  # используй правильный доступ к сообщению
     except Exception as e:
         return f"Ошибка при анализе: {str(e)}"
 
