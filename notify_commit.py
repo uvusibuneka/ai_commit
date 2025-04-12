@@ -21,6 +21,16 @@ async def main():
     else:
         print("Ошибка при выполнении git status:")
         print(result.stderr) 
+
+    result = subprocess.run(["git", "diff"], capture_output=True, text=True)
+    
+    if result.returncode == 0:
+        print("Изменения (git diff):")
+        print(result.stdout)  
+    else:
+        print("Ошибка при выполнении git diff:")
+        print(result.stderr)  
+
     print("✅ Отправлено в Telegram.")
 
 
